@@ -4,6 +4,7 @@
 
 ```bash
 python3 -m venv env
-.\env\Scripts\activate
+.\env\Scripts\activate # (Windows)
+# source env/bin/activate (Linux)
 pip install -r requirements.txt
 ```
