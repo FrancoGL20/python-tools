@@ -24,7 +24,7 @@
 ## Creation of the virtual environment and installation of the modules
 
 ```bash
-python3 -m venv env
+python -m venv env
 .\env\Scripts\activate # (Windows)
 # source env/bin/activate (Linux)
 

@@ -6,6 +6,7 @@ idna==3.4
 mutagen==1.47.0
 pycryptodomex==3.19.0
 Pygments==2.16.1
+python-dotenv==1.0.0
 redis==5.0.1
 requests==2.31.0
 rich==12.6.0
