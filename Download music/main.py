@@ -1,20 +1,29 @@
 import dotenv
 import os
 import signal
+import sys
 
 def handler(signum, frame):
-    print("Se ha detenido la descarga de la playlist",end="")
+    """
+    Function that handles the interruption signal (ctrl+c) and deletes the .cache and download_list.log files if they exist.
+
+    Args:
+    - signum: signal number
+    - frame: current stack frame
+    """
     
-    # si existe el archivo .cache lo elimina
+    print("Playlist downloaded has been stopped",end="")
+    
     if os.path.exists(".cache"):
         os.remove(".cache")
-        print(", se ha eliminado el archivo .cache",end="")
+        print(", the .cache file has been deleted",end="")
+
+    if os.path.exists("./playlists/download_list.log"):
+        os.remove("./playlists/download_list.log")
+        print(", the download_list.log file has been deleted")
     
-    if os.path.exists("./songs/download_list.log"):
-        os.remove("./songs/download_list.log")
-        print(", se ha eliminado el archivo download_list.log")
-    
-    exit(0)
+    # finish the program
+    sys.exit(0)
 
 signal.signal(signal.SIGINT, handler)
 
@@ -31,6 +40,10 @@ os.environ["SPOTIPY_CLIENT_SECRET"] = client_secret
 
 playlist_link = input("Enter the playlist link: ")
 
-# Ejecutar el comando para descargar la playlist
-os.system(f"spotify_dl -l {playlist_link} -o \"./songs/\" -s y")
+# Verify if the playlist directory exists
+if not os.path.exists("./playlists"):
+    os.mkdir("./playlists")
+
+# Execute the spotify_dl command
+os.system(f"spotify_dl -l {playlist_link} -o \"./playlists/\" -s y")
 

@@ -2,8 +2,7 @@
 
 ## Modules used (and documentation)
 
-- [spotipy](https://spotipy.readthedocs.io/en/2.22.1/#)
-- [spotify_dl](
+- [spotify_dl](https://github.com/SathyaBhat/spotify-dl)
 
 ## Requirements
 
@@ -14,9 +13,10 @@
         sudo apt-get install -y libav-tools
         ```
     - For Windows:
-        ```bash
-        winget install ffmpeg
-        ```
+        1. Download ffmpeg from [here](https://github.com/BtbN/FFmpeg-Builds/releases)
+        2. Extract the zip file
+        3. Move the unzipped folder to `C:\Program Files\` or a folder of your choice
+        4. Add the path to the `bin` folder to the `PATH` environment variable
 3. Spotify account
    1. Create an aplication in [Spotify for Developers](https://developer.spotify.com/dashboard/applications)
    2. Copy the Client ID and the Client Secret
@@ -31,7 +31,25 @@ python3 -m venv env
 pip install -r requirements.txt
 ```
 
-## Use
+## Use 
+
+### Use with the [main.py](main.py) script
+
+1. Configure the values for the environment variables SPOTIPY_CLIENT_ID and SPOTIPY_CLIENT_SECRET with the values copied from Spotify for Developers into a file named `.env` with the following format:
+    ```bash
+    SPOTIPY_CLIENT_ID="your-spotify-client-id"
+    SPOTIPY_SECRET_ID="your-spotify-client-secret"
+    ```
+2. Run the script
+    ```bash
+    python main.py
+    ```
+3. It will ask you for the playlist url
+4. The downloaded songs will be saved in the `playlists` folder
+
+NOTE: In case the execution of the script is interrupted (ex: ctrl+c), the `.cache` and `download_list.log` files will be deleted to avoid errors in the next execution.
+
+### Use directly from the terminal
 
 1. Configure the environment variables SPOTIPY_CLIENT_ID and SPOTIPY_CLIENT_SECRET with the values copied from Spotify for Developers
    - Linux:
