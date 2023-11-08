@@ -1,22 +1,22 @@
-# Descargar música de Spotify
+# Download music from Spotify
 
-## Requisitos
+## Requirements
 
-1. Python 3.7 o superior
+1. Python 3.7 or higher (preferably)
 2. ffmpeg
-    - Para linux:
+    - For linux:
         ```bash
         sudo apt-get install -y libav-tools
         ```
-    - Para Windows:
+    - For Windows:
         ```bash
         winget install ffmpeg
         ```
-3. Cuenta en Spotify
-   1. Crear una aplicación en [Spotify for Developers](https://developer.spotify.com/dashboard/applications)
-   2. Copiar el Client ID y el Client Secret
+3. Spotify account
+   1. Create an aplication in [Spotify for Developers](https://developer.spotify.com/dashboard/applications)
+   2. Copy the Client ID and the Client Secret
 
-## Creación de entorno virtual e instalación de librerias
+## Creation of the virtual environment and installation of the modules
 
 ```bash
 python3 -m venv env
@@ -26,9 +26,9 @@ python3 -m venv env
 pip install -r requirements.txt
 ```
 
-## Uso
+## Use
 
-1. Configurar las variables de entorno SPOTIPY_CLIENT_ID y SPOTIPY_CLIENT_SECRET con los valores copiados de Spotify for Developers
+1. Configure the environment variables SPOTIPY_CLIENT_ID and SPOTIPY_CLIENT_SECRET with the values copied from Spotify for Developers
    - Linux:
        ```bash
        export SPOTIPY_CLIENT_ID=your-spotify-client-id
@@ -45,27 +45,27 @@ pip install -r requirements.txt
        set SPOTIPY_CLIENT_SECRET=your-spotify-client-secret
        ```
 
-2. Ejecutar el script usando `spotify_dl`. para más información sobre los parámetros de entrada, ejecutar `spotify_dl --h`
+3. Execute the script using `spotify_dl`. for more information about the input parameters, execute `spotify_dl --h`
     
-    Para la mayoría de los casos, se puede usar el siguiente comando:
+    For most cases, you can use the following command:
     ```bash
     spotify_dl -l <playlist_url> -o <output_dir>
     ```
-    Para descargar multiples playlists, se puede usar el siguiente comando:
+    To download multiple playlists, you can use the following command:
     ```bash
     spotify_dl -l <playlist_url_1> <playlist_url_2> ... <playlist_url_n> -o <output_dir>
     ```
-    Para utilizar SponsorBlock, se puede usar el siguiente comando:
+    To use SponsorBlock (to skip ads), you can use the following command:
     ```bash
     spotify_dl -l <playlist_url> -o <output_dir> -s y
     ```
-    Para asegurar la descarga en paralelo, se puede usar el siguiente comando: (donde `<number>` es la cantidad de nucleos a utilizar)
+    To ensure parallel download, you can use the following command: (where `<number>` is the number of cores to use)
     ```bash
     spotify_dl -l <playlist_url> -o <output_dir> -mc <number>
     ```
 
 
-3. En caso de querer configurar parametros por defaults se puede crear un archivo `~/.spotify_dl_settings` con el siguiente formato:
+3. In case you want to configure default parameters, you can create a `~/.spotify_dl_settings` file with the following format:
     ```json
     {
         "output_dir": "path/to/output/dir",
@@ -79,6 +79,6 @@ pip install -r requirements.txt
     }
     ```
 
-## Créditos
+## Credits
 
-- Respositorio de GitHub [SathyaBhat](https://github.com/SathyaBhat/spotify-dl)
+- GitHub repository [SathyaBhat](https://github.com/SathyaBhat/spotify-dl)

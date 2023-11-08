@@ -1,0 +1,5 @@
+# Control the GUI in Windows with Python
+
+## Requirements
+
+1. Python 3.7 or higher (preferably)

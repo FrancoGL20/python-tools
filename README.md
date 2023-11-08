@@ -1,10 +1,3 @@
-# Conjunto de programas con utilidades que ofrece python y sus librerias (modulos)
+# Set of tools that can be done with python and its libraries
 
-## Creación de entorno virtual con sus librerias
-
-```bash
-python3 -m venv env
-.\env\Scripts\activate # (Windows)
-# source env/bin/activate (Linux)
-pip install -r requirements.txt
-```
+Every directory has a README.md file with a description of the tool and how to use step by step.
