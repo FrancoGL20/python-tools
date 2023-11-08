@@ -1,5 +1,10 @@
 # Download music from Spotify
 
+## Modules used (and documentation)
+
+- [spotipy](https://spotipy.readthedocs.io/en/2.22.1/#)
+- [spotify_dl](
+
 ## Requirements
 
 1. Python 3.7 or higher (preferably)
