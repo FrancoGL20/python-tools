@@ -25,8 +25,11 @@
 
 ```bash
 python -m venv env
+
 .\env\Scripts\activate # (Windows)
 # source env/bin/activate (Linux)
+
+python -m pip install --upgrade pip
 
 pip install -r requirements.txt
 ```
