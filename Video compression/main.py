@@ -1,4 +1,4 @@
-# Simplified version and explanation at: https://stackoverflow.com/a/64439347/12866353
+# Read the README.md file for more information and credits
 
 import os
 import ffmpeg
@@ -12,9 +12,14 @@ def compress_video(video_full_path, size_upper_bound, two_pass=True, filename_su
     :param filename_suffix: Add a suffix for new video.
     :return: out_put_name or error
     """
+    
+    # Creation of output directory
+    if not os.path.exists('./output'):
+        os.makedirs('./output')
+    
     filename, extension = os.path.splitext(video_full_path)
     extension = '.mp4'
-    output_file_name = filename + filename_suffix + extension
+    output_file_name = "./output/" + filename + filename_suffix + extension
 
     # Adjust them to meet your minimum requirements (in bps), or maybe this function will refuse your video!
     total_bitrate_lower_bound = 11000
@@ -71,6 +76,13 @@ def compress_video(video_full_path, size_upper_bound, two_pass=True, filename_su
                           **{'c:v': 'libx264', 'b:v': video_bitrate, 'c:a': 'aac', 'b:a': audio_bitrate}
                           ).overwrite_output().run()
 
+        # Drop the ffmpeg log and mbtree log.
+        if os.path.exists('ffmpeg2pass-0.log'):
+            os.remove('ffmpeg2pass-0.log')
+        if os.path.exists('ffmpeg2pass-0.log.mbtree'):
+            os.remove('ffmpeg2pass-0.log.mbtree')
+        
+        
         if os.path.getsize(output_file_name) <= size_upper_bound * 1024:
             return output_file_name
         elif os.path.getsize(output_file_name) < os.path.getsize(video_full_path):  # Do it again
@@ -83,5 +95,5 @@ def compress_video(video_full_path, size_upper_bound, two_pass=True, filename_su
         return False
 
 if __name__ == '__main__':
-    file_name = compress_video('video.mp4', 50 * 1000)
-    print(file_name)
+    file_name = compress_video('input.mp4', 10 * 1024)
+    print(f"\nThe resulting video is {file_name}")
