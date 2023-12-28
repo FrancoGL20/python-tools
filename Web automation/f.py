@@ -24,9 +24,17 @@ password.send_keys(os.getenv("PASSWORD"))
 
 login=driver.find_element(by=By.XPATH, value="//button[@type='submit']")
 login.click()
+time.sleep(5)
 
-time.sleep(3)
+# Extract all the images on the page
+images = driver.find_elements(by=By.TAG_NAME, value="img")
+print(f"Found {len(images)} images")
 
-print(driver.current_url)
+# Safe all images to disk
+for image in images:
+    image_url = image.get_attribute("src")
+    image_name = image_url.split("/")[-1]
+    with open(image_name, mode="wb") as file:
+        file.write(image.screenshot_as_png)
 
-time.sleep(3)
+time.sleep(5)
