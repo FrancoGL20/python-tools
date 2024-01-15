@@ -25,7 +25,6 @@
 
 ```bash
 python -m venv env
-
 .\env\Scripts\activate # (Windows)
 # source env/bin/activate (Linux)
 
