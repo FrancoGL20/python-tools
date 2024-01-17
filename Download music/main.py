@@ -45,6 +45,8 @@ if not os.path.exists("./playlists"):
     os.mkdir("./playlists")
 
 # Execute the spotify_dl command
-# os.system(f"spotify_dl -l {playlist_link} -o \"./playlists/\" -s y") # Make use of SponsorBlock
-os.system(f"spotify_dl -l {playlist_link} -o \"./playlists/\"")
+os.system(f"spotify_dl -l {playlist_link} -o \"./playlists/\" -s y") # Make use of SponsorBlock
+# os.system(f"spotify_dl -l {playlist_link} -o \"./playlists/\"") # Don't make use of SponsorBlock
 
+if os.path.exists("./.cache"):
+    os.remove("./.cache")
