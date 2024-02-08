@@ -1,18 +1,27 @@
 import pyautogui
+import time
+import keyboard
+import threading
+import sys
 
-pyautogui.PAUSE = 1.5
+pyautogui.PAUSE = 0.5
 pyautogui.FAILSAFE = True
 
-pyautogui.moveTo(1500,500)
+def background_killer():
+    pyautogui.hotkey('win')
+    pyautogui.typewrite('Teams work', interval=0.1)
+    pyautogui.hotkey('enter')
+    while True:
+        pyautogui.moveTo(500, 500, 0.3, pyautogui.easeInQuad)
+        pyautogui.moveTo(700, 500, 0.3, pyautogui.easeInQuad)
+        pyautogui.moveTo(700, 700, 0.3, pyautogui.easeInQuad)
+        pyautogui.moveTo(500, 700, 0.3, pyautogui.easeInQuad)
 
-print("start slow, end fast")
-pyautogui.moveTo(500, 500, 1, pyautogui.easeInQuad)     # start slow, end fast
-print("start fast, end slow")
-pyautogui.moveTo(1500, 500, 1, pyautogui.easeOutQuad)    # start fast, end slow
-print("start and end fast, slow in middle")
-pyautogui.moveTo(500, 500, 1, pyautogui.easeInOutQuad)  # start and end fast, slow in middle
-print("start and end slow, fast in middle")
-pyautogui.moveTo(1500, 500, 1, pyautogui.easeInBounce)   # bounce at the end
-print("start and end fast, slow in middle")
-pyautogui.moveTo(500, 500, 1, pyautogui.easeInElastic)  # rubber band at the end
-print("start and end slow, fast in middle")
+background_thread=threading.Thread(target=background_killer)
+background_thread.daemon=True
+background_thread.start()
+
+print("Press 'esc' to stop the program")
+while True:
+    if keyboard.is_pressed('esc'):
+        sys.exit(0)
