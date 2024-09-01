@@ -18,6 +18,6 @@ pip install -r requirements.txt
 
 ## Use 
 
-1. Create a data file (no matter extension .txt, csv, md, etc.)
+1. Create a data.csv file
 2. Open and execute the [main.ipynb](./main.ipynb)
 3. A file with no repeated lines will be created
