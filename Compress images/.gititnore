@@ -1,0 +1,7 @@
+/photos
+/output
+*.avif
+*.webp
+*.jpeg
+*.jpg
+*.png
