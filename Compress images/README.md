@@ -1,5 +1,9 @@
 # Compression of images
 
+This program compresses images using the TinyPNG API, which allows you to compress up to 500 images per month for free.
+
+Also, it can be compressed images in AVIF, WebP, JPEG and PNG formats.
+
 ## Requirements
 
 1. Python 2.7 or higher (preferably)
