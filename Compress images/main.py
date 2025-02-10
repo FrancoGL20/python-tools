@@ -5,7 +5,7 @@ from sys import exit
 
 
 #* Load environment variables
-dotenv.load_dotev()
+dotenv.load_dotenv()
 tinify.key = os.getenv("TINIFY_API_KEY")
 
 
@@ -42,3 +42,16 @@ for photo in os.listdir(INPUT_DIRECTORY):
     source.to_file(os.path.join(OUTPUT_DIRECTORY, photo))
     counter += 1
     print(f"Processed {counter}/{total_photos_count} photos, {photo}")
+    
+
+#* Print the comparison between the original and compressed folders sizes
+original_size = sum(os.path.getsize(os.path.join(INPUT_DIRECTORY, photo)) for photo in os.listdir(INPUT_DIRECTORY))
+compressed_size = sum(os.path.getsize(os.path.join(OUTPUT_DIRECTORY, photo)) for photo in os.listdir(OUTPUT_DIRECTORY))
+
+print(f"\nOriginal size: {original_size / (1024 * 1024):.8f} MB")
+print(f"Compressed size: {compressed_size / (1024 * 1024):.8f} MB")
+
+print(f"""
+Saved {original_size - compressed_size} bytes
+Saved {(original_size - compressed_size) / (1024 * 1024):.8f} MB
+Saved {((original_size - compressed_size) / original_size) * 100:.2f}%""")
