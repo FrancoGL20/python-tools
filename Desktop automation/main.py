@@ -1,74 +1,87 @@
 import time
-import threading
+# import threading
 import pyautogui
 from pynput import mouse, keyboard
 
 # Variables para almacenar datos
 recording = False
 playing = False
-clicks = []
+actions = []  # Lista de acciones: (tipo, datos, timestamp, delay)
+# tipo puede ser 'click' o 'text'
+# datos será (x,y) para clicks o el texto para escritura
 
 def on_click(x, y, button, pressed):
     """ Registra clics solo si estamos en modo grabación. """
-    global recording, clicks
+    global recording, actions
     if recording and pressed:
-        timestamp = time.time()  # Momento exacto del clic
-        if len(clicks) > 0:
-            delay = timestamp - clicks[-1][2]  # Tiempo desde el último clic
+        timestamp = time.time()
+        if len(actions) > 0:
+            delay = timestamp - actions[-1][2]
         else:
-            delay = 0  # Primer clic sin retraso
-        clicks.append((x, y, timestamp, delay))
-        # print(clicks)
+            delay = 0
+        actions.append(('click', (x, y), timestamp, delay))
 
 def on_press(key):
     """ Maneja eventos de teclado. """
-    global recording, playing, clicks
+    global recording, playing, actions
 
     try:
-        if key.char.lower() == 's':  # Tecla para iniciar/detener grabación
+        # Detectar teclas especiales
+        if key == keyboard.Key.right:  # Flecha derecha para grabar
             if not recording:
-                clicks.clear()
+                actions.clear()
                 print("Grabación iniciada...")
             else:
                 print("Grabación finalizada.")
             recording = not recording
-
-        elif key.char.lower() == 'p':  # Tecla para iniciar la reproducción
-            if not recording and clicks:
+            
+        elif key == keyboard.Key.left:  # Flecha izquierda para reproducir
+            if not recording and actions:
                 print("Ejecutando acciones grabadas...")
                 playing = True
                 play_actions()
                 playing = False
                 print("Reproducción finalizada.")
         
-        elif key.char.lower() == 'q':
-            # Tecla para salir del programa
+        elif key == keyboard.Key.esc:  # Esc para salir
             print("Saliendo...")
             recording = False
             playing = False
-            # Detener los listeners de forma segura
             keyboard_listener.stop()
             mouse_listener.stop()
-            # Esperar a que los listeners se detengan completamente
-            # keyboard_listener.join()
-            # mouse_listener.join()
-            return False  # Detiene el listener
+            return False
+            
+        # Grabar texto normal durante la grabación
+        elif recording and hasattr(key, 'char'):  # Si es un carácter imprimible
+            timestamp = time.time()
+            if len(actions) > 0:
+                delay = timestamp - actions[-1][2]
+            else:
+                delay = 0
+            actions.append(('text', key.char, timestamp, delay))
 
     except AttributeError:
         pass
 
 def play_actions():
-    """ Ejecuta los clics grabados con los tiempos guardados. """
-    for i, (x, y, timestamp, delay) in enumerate(clicks):
-        if i == 0:
-            pyautogui.click(x, y)  # Realiza el primer clic sin esperar
-            print(f"Clic inicial en ({x}, {y})")
-        else:
-            time.sleep(delay)  # Espera el tiempo registrado
-            pyautogui.click(x, y)  # Realiza el clic
+    """ Ejecuta las acciones grabadas con los tiempos guardados. """
+    for i, (action_type, data, timestamp, delay) in enumerate(actions):
+        if i > 0:  # Esperar el delay para todas las acciones excepto la primera
+            # time.sleep(delay)
+            time.sleep(0.1)
+            
+        if action_type == 'click':
+            x, y = data
+            pyautogui.click(x, y)
             print(f"Clic en ({x}, {y}) después de {delay:.2f}s")
+        elif action_type == 'text':
+            pyautogui.write(data)
+            print(f"Escribiendo '{data}' después de {delay:.2f}s")
 
 print("Iniciando el programa...")
+print("Presiona FLECHA DERECHA para iniciar/detener la grabación")
+print("Presiona FLECHA IZQUIERDA para reproducir")
+print("Presiona ESC para salir")
 
 # Configurar listeners
 mouse_listener = mouse.Listener(on_click=on_click)
